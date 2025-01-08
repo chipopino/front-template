@@ -1,0 +1,64 @@
+SELECT DISTINCT ?item ?itemLabel ?description (SAMPLE(?starttime) AS ?starttime)
+                (SAMPLE(?perpetratorLabel) AS ?perpetratorLabel)
+                (SAMPLE(?victimLabel) AS ?victimLabel)
+                (SAMPLE(?deaths) AS ?deaths)
+                (SAMPLE(?injuries) AS ?injuries)
+                (SAMPLE(?pic) AS ?pic)
+                (SAMPLE(?wikipedia) AS ?wikipedia)
+WHERE {
+  {
+    ?item wdt:P31* wd:Q125092269; schema:description ?description.
+    FILTER (REGEX(?description, "(jew)|(israel)|(palestine)", "i"))
+  }
+  UNION
+  {
+    ?item wdt:P31* wd:Q130583773; schema:description ?description.
+    FILTER (REGEX(?description, "(jew)|(israel)|(palestine)", "i"))
+  }
+  UNION
+  {
+    ?item wdt:P279* wd:Q1520311; schema:description ?description.
+    FILTER (REGEX(?description, "(jew)|(israel)|(palestine)", "i"))
+  }
+  UNION
+  {
+    ?item wdt:P279* wd:Q83267; schema:description ?description.
+    FILTER (REGEX(?description, "(jew)|(israel)|(palestine)", "i"))
+  }
+  UNION
+  {
+    ?item wdt:P31* wd:Q177716; schema:description ?description.
+    FILTER (REGEX(?description, "(jew)|(israel)|(palestine)", "i"))
+  }
+
+  OPTIONAL { ?item wdt:P580 ?st. }
+  OPTIONAL { ?item wdt:P585 ?pt. }
+  OPTIONAL { ?item wdt:P8031 ?perpetrator. }
+  OPTIONAL { ?item wdt:P8032 ?victim. }
+  FILTER (BOUND(?st) || BOUND(?et) || BOUND(?pt))
+  BIND(COALESCE(?st, ?pt) AS ?starttime)
+
+  OPTIONAL { ?item wdt:P1120 ?deaths. }
+  OPTIONAL { ?item wdt:P1339 ?injuries. }
+  OPTIONAL { ?item wdt:P18 ?pic. }
+
+  OPTIONAL {
+    ?item wikibase:sitelinks ?sl .
+    ?item ^schema:about ?wikipedia_en .
+    ?wikipedia_en schema:isPartOf <https://en.wikipedia.org/>;
+    schema:name ?articlename .
+  }
+  OPTIONAL {
+    ?item wikibase:sitelinks ?sl .
+    ?item ^schema:about ?wikipedia .
+    ?wikipedia schema:isPartOf ?wikipedia_any;
+    schema:name ?articlename .
+  }
+  BIND(COALESCE(?wikipedia_en, ?wikipedia) AS ?wikipedia)
+
+  FILTER (datatype(?starttime) = xsd:dateTime)  # Ensure it's a datetime literal
+  FILTER (LANG(?description) = "en") # Get descriptions in English
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+GROUP BY ?item ?itemLabel ?description
+ORDER BY ASC(?starttime)
