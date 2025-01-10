@@ -8,19 +8,20 @@ export default function Main() {
     const get = useGet();
     const { setModalContent } = useCtx();
 
+    function btnOnClick() {
+        get('/todos/1', 'https://jsonplaceholder.typicode.com').then((result: any) => {
+            console.log("this is the fetch result: ", result);
+            setModalContent(
+                <div className='flex flex-col gap-4'>
+                    <p>example of fetch and modal</p>
+                    <p>{result.title}</p>
+                </div>
+            )
+        })
+    }
+
     const mainTsx = <div className='center-flex w-full h-full'>
-        <Btn
-            onClick={() =>
-                get('/todos/1', 'https://jsonplaceholder.typicode.com')
-                    .then((result: any) =>
-                        setModalContent(
-                            <div className='flex flex-col gap2'>
-                                <p>example of fetch and modal</p>
-                                <p>{result.title}</p>
-                            </div>
-                        ))
-            }
-        >
+        <Btn onClick={btnOnClick}>
             Click me
         </Btn>
     </div>

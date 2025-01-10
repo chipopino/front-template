@@ -1,5 +1,5 @@
 import React from 'react';
-import {cn} from 'methods/global';
+import {cn} from 'methods/base/global';
 
 export const loaderTsx = <div className={cn(
     'w-16 h-16 !z-[999] mx-auto',

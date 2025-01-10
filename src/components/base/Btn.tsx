@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Button } from '@headlessui/react';
-import { cn } from 'methods/global'
-import { isT } from 'methods/global';
+import { cn } from 'methods/base/global'
+import { isT } from 'methods/base/global';
 
 interface btnType {
     children: ReactNode;

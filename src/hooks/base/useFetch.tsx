@@ -1,6 +1,6 @@
 import useCtx from 'components/base/Context';
-import { get, post } from 'methods/fetch';
-import { getUniqueString } from 'methods/global';
+import { get, post } from 'methods/base/fetch';
+import { getUniqueString } from 'methods/base/global';
 
 
 export function useGet() {
