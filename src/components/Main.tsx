@@ -6,6 +6,7 @@ import useGetWikiSummary from 'hooks/useGetWikiSummary';
 import processWikidataQuery from 'methods/processWikidataQuery';
 import { cn, isSm } from 'methods/global';
 
+import Image from 'components/Image';
 import MenuIcon from '@mui/icons-material/Menu';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 
@@ -52,7 +53,7 @@ export default function Main() {
                     if (isSm()) {
                         setModalContent(
                             <div className='flex flex-col gap-2'>
-                                {item.pic && <img src={item.pic} className='max-w-[300px] mx-auto' />}
+                                {item.pic && <Image src={item.pic} className='max-w-[300px] mx-auto' />}
                                 {!item.pic && <ImageNotSupportedIcon className='!w-full' />}
                                 {/* @ts-ignore */}
                                 <p className='max-w-[600px] p-4'>{result}</p>
@@ -94,7 +95,7 @@ export default function Main() {
             })}
         </div>
         <div className='hidden md:block grow p-4 flex flex-col items-center justify-center overflow-hidden overflow-y-auto'>
-            {selected.pic && <img src={selected.pic} className='max-w-[300px] mx-auto' />}
+            {selected.pic && <Image src={selected.pic} className='max-w-[300px] mx-auto' />}
             {!selected.pic && <ImageNotSupportedIcon className='!w-full' />}
             <p className='max-w-[600px] p-4'>{summary}</p>
             <a href={selected.wikipedia} className='w-full p-4'>{selected.wikipedia}</a>
