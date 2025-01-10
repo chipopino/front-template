@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useCtx, { DEFAULT_ITEM } from 'components/Context';
 import WikiQueryModal from 'components/WikiQueryModal';
-import { cn, getWikiSummary, isSm } from 'methodes/global';
-import processWikidataQuery from 'methodes/humanizeWikidataQuery';
+import { cn, isSm } from 'methods/global';
+import { useGetWikiSummary } from 'hooks/useGetWikiSummary';
+import processWikidataQuery from 'methods/humanizeWikidataQuery';
 import Btn from 'components/Btn';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -11,11 +12,11 @@ import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 
 export default function Main() {
 
-    const { setModalContent, isModalOpen, items, setItems, setIsLoading } = useCtx();
+    const { setModalContent, isModalOpen, items, setItems } = useCtx();
     const [selected, setSelected] = useState(items[0]);
     const [summary, setSummary] = useState<string>('');
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const getWiki = useGetWikiSummary();
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const handleClick = () => {
@@ -43,31 +44,27 @@ export default function Main() {
         setIsMenuOpen(false);
     };
 
-    useEffect(() => {
-        if (selected.item) {
-            //@ts-ignore
-            getWikiSummary(selected.wikipedia)
-                .then(result => {
-                    //@ts-ignore
+    function handleGetWikiLink(item: any) {
+        if (selected.itemId !== item.itemId) {
+            setSelected(item);
+            if (item.item && item.wikipedia) {
+                getWiki(item.wikipedia).then((result: any) => {
                     setSummary(result);
-                    if (isSm() && isLoaded) {
+                    if (isSm()) {
                         setModalContent(
                             <div className='flex flex-col gap-2'>
-                                {selected.pic && <img src={selected.pic} className='max-w-[300px] mx-auto' />}
-                                {!selected.pic && <ImageNotSupportedIcon className='!w-full' />}
+                                {item.pic && <img src={item.pic} className='max-w-[300px] mx-auto' />}
+                                {!item.pic && <ImageNotSupportedIcon className='!w-full' />}
                                 {/* @ts-ignore */}
                                 <p className='max-w-[600px] p-4'>{result}</p>
-                                <a href={selected.wikipedia} className='w-full p-4'>{selected.wikipedia}</a>
-                            </div>)
+                                <a href={item.wikipedia} className='w-full p-4'>{item.wikipedia}</a>
+                            </div>
+                        )
                     }
                 })
-                .catch(err => console.log("ERROR 236463565346", err))
-                .finally(() => {
-                    setIsLoaded(true); // this should be set to true when page first loaded
-                    setIsLoading(false);
-                });
+            }
         }
-    }, [selected])
+    }
 
     useEffect(() => {
         setIsMenuOpen(false);
@@ -77,24 +74,12 @@ export default function Main() {
         <div className='w-full md:max-w-[400px] overflow-y-auto'>
             {items.map((e: any) => {
                 return <div
-                    key={e.item}
+                    key={`key-346437-${e.itemId}`}
                     className={cn(
-                        e.item === selected.item && 'bg-secondary',
+                        e.itemId === selected.itemId && 'bg-secondary',
                         'p-2 m-1 border flex flex-col overflow-hidden'
                     )}
-                    onClick={() => {
-                        const isSameItem = selected.item === e.item;
-                        !isSameItem && setIsLoading(true);
-                        if (isSm() && isSameItem) {
-                            // rerender needed, this is the purpose of this, also to animate the item
-                            setSelected(DEFAULT_ITEM);
-                            setTimeout(() => {
-                                setSelected(e);
-                            }, 10)
-                        } else {
-                            !isSameItem && setSelected(e);
-                        }
-                    }}
+                    onClick={() => { handleGetWikiLink(e) }}
                 >
                     <div className='flex gap-2'>
                         <a href={e.item}>{e.itemLabel}</a>

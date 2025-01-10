@@ -31,6 +31,7 @@ export default function processWikidataQuery(data: Data): Entry[] {
   }
 
   let output: Entry[] = [];
+  let index = 0;
   for (let i of input) {
     let isBCE = false;
     let starttime = i['starttime'];
@@ -42,7 +43,8 @@ export default function processWikidataQuery(data: Data): Entry[] {
     if (isBCE) {
       st += ' BCE';
     }
-    output.push({ ...i, starttime: st });
+    output.push({ itemId: `${index}`, ...i, starttime: st });
+    index++;
   }
 
   return output;

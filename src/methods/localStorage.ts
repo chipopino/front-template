@@ -1,4 +1,4 @@
-import { jcompare } from "methodes/global";
+import { jcompare } from "methods/global";
 
 type localStorageKeyType = 'lastQuery';
 

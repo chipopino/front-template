@@ -11,7 +11,7 @@ function base_fetch(endpoint: string, data?: any, method = 'POST', headers = {},
             //@ts-ignore
             .then(response => response.json())
             .then(data => resolve(data))
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error: 32485827356', error));
     })
 }
 export function get(endpoint: string, baseUrl = '') {

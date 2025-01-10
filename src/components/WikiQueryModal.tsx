@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import useCtx from 'components/Context';
 import Btn from 'components/Btn';
-import { get } from 'methodes/fetch';
-import { createQueryString } from 'methodes/global';
-
-// import timelineData from './data/json/fin.json';
+import { useGet } from 'hooks/useFetch';
+import { createQueryString } from 'methods/global';
+import processWikidataQuery from 'methods/humanizeWikidataQuery';
 import jewishQuery from './jewishQuery.txt';
-import { lset } from 'methodes/localStorage';
-import processWikidataQuery from 'methodes/humanizeWikidataQuery';
 
 export default function WikiQueryModal() {
 
     const [text, setText] = useState(jewishQuery);
-    const { setModalContent, setItems, setIsLoading } = useCtx();
+    const { setModalContent, setItems } = useCtx();
+    const get = useGet();
 
     function onUpload() {
-        lset('lastQuery', text);
-        setIsLoading(true);
         get(
             createQueryString({
                 'query': text,
@@ -27,9 +23,7 @@ export default function WikiQueryModal() {
             //@ts-ignore
             setItems(processWikidataQuery(e));
             setModalContent(null);
-        }).catch(err => {
-            console.log("ERR 4262436464", err)
-        }).finally(() => setIsLoading(false));
+        })
     }
 
     return <div className='relative flex flex-col gap-4 w-[80vw] h-[80vh]'>

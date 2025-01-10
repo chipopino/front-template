@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from 'methodes/global';
+import { cn } from 'methods/global';
 import useCtx from 'components/Context';
 
 export default function Loader({ className }: { className?: string }) {

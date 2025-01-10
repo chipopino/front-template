@@ -29,18 +29,10 @@ export function createQueryString(params: Record<string, any>): string {
     return `?${searchParams.toString()}`;
 }
 
-export function getWikiSummary(wikipediaLink: string) {
-    return new Promise((resolve, reject) => {
-        const prefix = (/https:\/\/(www\.)?(.*?)\.wikipedia.org\/(.+)/gm).exec(wikipediaLink)?.[2];
-        const items = wikipediaLink.split('/');
-        const articleName = items[items.length - 1];
-        //@ts-ignore
-        const apiUrl = `https://${prefix}.wikipedia.org/api/rest_v1/page/summary/${articleName}`;
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                resolve(data.extract)
-            })
-            .catch(error => reject(error));
-    })
+export function getUniqueString(array: string[]) {
+    let fin;
+    do {
+        fin = `${Math.random()}`;
+    } while (array.includes(fin));
+    return fin;
 }

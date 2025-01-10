@@ -4,7 +4,7 @@ import { ContextProvider } from 'components/Context';
 import Modal from 'components/Modal';
 import Main from './components/Main';
 import Loader from './components/Loader';
-import { cn } from 'methodes/global';
+import { cn } from 'methods/global';
 import './index.css';
 
 function App() {

@@ -1,5 +1,6 @@
-import React, { createContext, useState, ReactNode, useContext } from 'react';
-import data from './data.json';
+import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react';
+import data from './data5.json';
+import processWikidataQuery from 'methods/humanizeWikidataQuery';
 
 type modalStateType = null | ReactNode;
 
@@ -28,11 +29,18 @@ const Context = createContext<any>(undefined);
 
 export function ContextProvider({ children }: { children: ReactNode }) {
 
+    //@ts-ignore
+    const [items, setItems] = useState<any>(processWikidataQuery(data));
     const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
     const [modalContent, _setModalContent] = useState<modalStateType>(null);
-    // const [items, setItems] = useState<any>(data);
-    const [items, setItems] = useState<any>(data);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [loadingList, setLoadingList] = useState<number[]>([]);
+
+    // loadingList is a list of jobs that are currently executing
+    
+    useEffect(() => {
+        setIsLoading(!!loadingList.length);
+    }, [loadingList])
 
     function setModalContent(content: ReactNode) {
         if (content) {
@@ -54,7 +62,9 @@ export function ContextProvider({ children }: { children: ReactNode }) {
             items,
             setItems,
             isLoading,
-            setIsLoading
+            setIsLoading,
+            loadingList,
+            setLoadingList,
         }}>
             {children}
         </Context.Provider>

@@ -9,7 +9,8 @@ const d_root = (...args) => path.resolve(__dirname, ...args);
 const d_src = (...args) => d_root('src', ...args);
 const d_dist = (...args) => d_root('dist', ...args);
 const d_components = (...args) => d_src('components', ...args);
-const d_methodes = (...args) => d_src('methodes', ...args);
+const d_methods = (...args) => d_src('methods', ...args);
+const d_hooks = (...args) => d_src('hooks', ...args);
 
 const config = {
   entry: d_src('index.tsx'), // Entry file for React
@@ -18,9 +19,9 @@ const config = {
     filename: 'bundle.js', // Output file name
   },
   devServer: {
-    open: true,
+    open: false,
     host: 'localhost',
-    port: 3000, // Default port for React
+    port: 3000, 
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -60,7 +61,8 @@ const config = {
       root: d_root(),
       src: d_src(),
       components: d_components(),
-      methodes: d_methodes(),
+      methods: d_methods(),
+      hooks: d_hooks(),
     }
   },
   mode: isProduction ? 'production' : 'development',

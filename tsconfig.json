@@ -17,8 +17,11 @@
       "components/*": [
         "src/components/*"
       ],
-      "methodes/*": [
-        "src/methodes/*"
+      "methods/*": [
+        "src/methods/*"
+      ],
+      "hooks/*": [
+        "src/hooks/*"
       ],
     }
   },

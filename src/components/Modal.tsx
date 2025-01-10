@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useCtx from 'components/Context';
-import { cn } from 'src/methodes/global';
+import { cn } from 'methods/global';
 
 export default function Modal(props: { children?: any }) {
 
