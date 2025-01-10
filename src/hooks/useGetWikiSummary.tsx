@@ -1,6 +1,6 @@
 import { useGet } from 'hooks/useFetch';
 
-export function useGetWikiSummary() {
+export default function useGetWikiSummary() {
     const get = useGet();
     return (wikipediaLink: string) => {
         return new Promise((resolve, reject) => {

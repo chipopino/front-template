@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ContextProvider } from 'components/Context';
 import Modal from 'components/Modal';
-import Main from './components/Main';
-import Loader from './components/Loader';
+import Main from 'components/Main';
+import Loader from 'components/Loader';
 import { cn } from 'methods/global';
 import './index.css';
 
@@ -13,9 +13,9 @@ function App() {
     'bg-background flex flex-col'
   )}>
     <ContextProvider>
+      <Loader />
       <Modal />
       <Main />
-      <Loader/>
     </ContextProvider>
   </div>
 

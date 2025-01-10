@@ -1,16 +1,8 @@
-import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react';
-import data from './data5.json';
-import processWikidataQuery from 'methods/humanizeWikidataQuery';
+import React, { useState, useEffect, createContext, useContext, ReactNode } from 'react';
+import processWikidataQuery from 'methods/processWikidataQuery';
+import data from './data.json';
 
 type modalStateType = null | ReactNode;
-
-interface contextType {
-    isModalOpen: Boolean;
-    modalContent: modalStateType;
-    setModalContent: (content: ReactNode) => void;
-    items: any;
-    setItems: any;
-}
 
 export const DEFAULT_ITEM = {
     "item": "",
@@ -29,15 +21,15 @@ const Context = createContext<any>(undefined);
 
 export function ContextProvider({ children }: { children: ReactNode }) {
 
-    //@ts-ignore
-    const [items, setItems] = useState<any>(processWikidataQuery(data));
+    // loadingList is a list of jobs that are currently executing
     const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
     const [modalContent, _setModalContent] = useState<modalStateType>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [loadingList, setLoadingList] = useState<number[]>([]);
-
-    // loadingList is a list of jobs that are currently executing
     
+    //@ts-ignore
+    const [items, setItems] = useState<any>(processWikidataQuery(data));
+
     useEffect(() => {
         setIsLoading(!!loadingList.length);
     }, [loadingList])

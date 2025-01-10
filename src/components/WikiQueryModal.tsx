@@ -3,7 +3,7 @@ import useCtx from 'components/Context';
 import Btn from 'components/Btn';
 import { useGet } from 'hooks/useFetch';
 import { createQueryString } from 'methods/global';
-import processWikidataQuery from 'methods/humanizeWikidataQuery';
+import processWikidataQuery from 'methods/processWikidataQuery';
 import jewishQuery from './jewishQuery.txt';
 
 export default function WikiQueryModal() {

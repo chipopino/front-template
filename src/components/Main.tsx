@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useCtx, { DEFAULT_ITEM } from 'components/Context';
-import WikiQueryModal from 'components/WikiQueryModal';
-import { cn, isSm } from 'methods/global';
-import { useGetWikiSummary } from 'hooks/useGetWikiSummary';
-import processWikidataQuery from 'methods/humanizeWikidataQuery';
+import useCtx from 'components/Context';
 import Btn from 'components/Btn';
+import WikiQueryModal from 'components/WikiQueryModal';
+import useGetWikiSummary from 'hooks/useGetWikiSummary';
+import processWikidataQuery from 'methods/processWikidataQuery';
+import { cn, isSm } from 'methods/global';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
@@ -29,7 +29,6 @@ export default function Main() {
 
             reader.onload = (e) => {
                 if (e.target?.result) {
-                    console.log(e.target?.result)
                     //@ts-ignore
                     setItems(processWikidataQuery(JSON.parse(e.target.result)));
                 }
