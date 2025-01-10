@@ -1,5 +1,5 @@
 import React from 'react';
-import { loaderTsx } from 'components/Tsx';
+import { loaderTsx } from 'components/base/Tsx';
 import { Img as _Img } from 'react-image';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 

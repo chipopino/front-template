@@ -1,4 +1,4 @@
-import useCtx from 'components/Context';
+import useCtx from 'components/base/Context';
 import { get, post } from 'methods/fetch';
 import { getUniqueString } from 'methods/global';
 

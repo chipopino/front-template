@@ -1,6 +1,6 @@
 import React from 'react';
-import useCtx from 'components/Context';
-import { loaderTsx } from 'components/Tsx';
+import useCtx from 'components/base/Context';
+import { loaderTsx } from 'components/base/Tsx';
 
 export default function Loader({ className }: { className?: string }) {
 
